@@ -8,8 +8,8 @@
   FreebiesService.$inject = ['$resource'];
 
   function FreebiesService($resource) {
-    return $resource('api/freebies/:articleId', {
-      articleId: '@_id'
+    return $resource('api/freebies/:freebieId', {
+      freebieId: '@_id'
     }, {
       update: {
         method: 'PUT'

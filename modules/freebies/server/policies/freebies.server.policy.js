@@ -18,7 +18,7 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/freebies',
       permissions: '*'
     }, {
-      resources: '/api/freebies/:articleId',
+      resources: '/api/freebies/:freebieId',
       permissions: '*'
     }]
   }, {
@@ -27,7 +27,7 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/freebies',
       permissions: ['get', 'post']
     }, {
-      resources: '/api/freebies/:articleId',
+      resources: '/api/freebies/:freebieId',
       permissions: ['get']
     }]
   }, {
@@ -36,7 +36,7 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/freebies',
       permissions: ['get']
     }, {
-      resources: '/api/freebies/:articleId',
+      resources: '/api/freebies/:freebieId',
       permissions: ['get']
     }]
   }]);

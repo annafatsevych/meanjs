@@ -3,11 +3,11 @@
 
   angular
     .module('freebies')
-    .controller('ArticlesListController', ArticlesListController);
+    .controller('FreebiesListController', FreebiesListController);
 
-  ArticlesListController.$inject = ['FreebiesService'];
+  FreebiesListController.$inject = ['FreebiesService'];
 
-  function ArticlesListController(FreebiesService) {
+  function FreebiesListController(FreebiesService) {
     var vm = this;
 
     vm.freebies = FreebiesService.query();

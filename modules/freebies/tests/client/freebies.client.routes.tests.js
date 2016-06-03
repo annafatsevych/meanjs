@@ -12,10 +12,10 @@
     // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
     // This allows us to inject a service but then attach it to a variable
     // with the same name as the service.
-    beforeEach(inject(function ($rootScope, _ArticlesService_) {
+    beforeEach(inject(function ($rootScope, _FreebiesService_) {
       // Set a new global scope
       $scope = $rootScope.$new();
-      FreebiesService = _ArticlesService_;
+      FreebiesService = _FreebiesService_;
     }));
 
     describe('Route Config', function () {
@@ -60,14 +60,14 @@
       describe('View Route', function () {
         var viewstate,
           FreebiesController,
-          mockArticle;
+          mockFreebie;
 
         beforeEach(inject(function ($controller, $state, $templateCache) {
           viewstate = $state.get('freebies.view');
           $templateCache.put('modules/freebies/client/views/view-freebie.client.view.html', '');
 
           // create mock freebie
-          mockArticle = new FreebiesService({
+          mockFreebie = new FreebiesService({
             _id: '525a8422f6d0f87f0e407a33',
             title: 'An Freebie about MEAN',
             content: 'MEAN rocks!'
@@ -76,12 +76,12 @@
           // Initialize Controller
           FreebiesController = $controller('FreebiesController as vm', {
             $scope: $scope,
-            articleResolve: mockArticle
+            articleResolve: mockFreebie
           });
         }));
 
         it('Should have the correct URL', function () {
-          expect(viewstate.url).toEqual('/:articleId');
+          expect(viewstate.url).toEqual('/:freebieId');
         });
 
         it('Should have a resolve function', function () {
@@ -91,12 +91,12 @@
 
         it('should respond to URL', inject(function ($state) {
           expect($state.href(viewstate, {
-            articleId: 1
+            freebieId: 1
           })).toEqual('/freebies/1');
         }));
 
         it('should attach an freebie to the controller scope', function () {
-          expect($scope.vm.freebie._id).toBe(mockArticle._id);
+          expect($scope.vm.freebie._id).toBe(mockFreebie._id);
         });
 
         it('Should not be abstract', function () {
@@ -111,19 +111,19 @@
       describe('Create Route', function () {
         var createstate,
           FreebiesController,
-          mockArticle;
+          mockFreebie;
 
         beforeEach(inject(function ($controller, $state, $templateCache) {
           createstate = $state.get('freebies.create');
           $templateCache.put('modules/freebies/client/views/form-freebie.client.view.html', '');
 
           // create mock freebie
-          mockArticle = new FreebiesService();
+          mockFreebie = new FreebiesService();
 
           // Initialize Controller
           FreebiesController = $controller('FreebiesController as vm', {
             $scope: $scope,
-            articleResolve: mockArticle
+            articleResolve: mockFreebie
           });
         }));
 
@@ -141,7 +141,7 @@
         }));
 
         it('should attach an freebie to the controller scope', function () {
-          expect($scope.vm.freebie._id).toBe(mockArticle._id);
+          expect($scope.vm.freebie._id).toBe(mockFreebie._id);
           expect($scope.vm.freebie._id).toBe(undefined);
         });
 
@@ -157,14 +157,14 @@
       describe('Edit Route', function () {
         var editstate,
           FreebiesController,
-          mockArticle;
+          mockFreebie;
 
         beforeEach(inject(function ($controller, $state, $templateCache) {
           editstate = $state.get('freebies.edit');
           $templateCache.put('modules/freebies/client/views/form-freebie.client.view.html', '');
 
           // create mock freebie
-          mockArticle = new FreebiesService({
+          mockFreebie = new FreebiesService({
             _id: '525a8422f6d0f87f0e407a33',
             title: 'An Freebie about MEAN',
             content: 'MEAN rocks!'
@@ -173,12 +173,12 @@
           // Initialize Controller
           FreebiesController = $controller('FreebiesController as vm', {
             $scope: $scope,
-            articleResolve: mockArticle
+            articleResolve: mockFreebie
           });
         }));
 
         it('Should have the correct URL', function () {
-          expect(editstate.url).toEqual('/:articleId/edit');
+          expect(editstate.url).toEqual('/:freebieId/edit');
         });
 
         it('Should have a resolve function', function () {
@@ -188,12 +188,12 @@
 
         it('should respond to URL', inject(function ($state) {
           expect($state.href(editstate, {
-            articleId: 1
+            freebieId: 1
           })).toEqual('/freebies/1/edit');
         }));
 
         it('should attach an freebie to the controller scope', function () {
-          expect($scope.vm.freebie._id).toBe(mockArticle._id);
+          expect($scope.vm.freebie._id).toBe(mockFreebie._id);
         });
 
         it('Should not be abstract', function () {

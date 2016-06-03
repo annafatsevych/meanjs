@@ -3,13 +3,13 @@
 
   describe('Freebies List Controller Tests', function () {
     // Initialize global variables
-    var ArticlesListController,
+    var FreebiesListController,
       $scope,
       $httpBackend,
       $state,
       Authentication,
       FreebiesService,
-      mockArticle;
+      mockFreebie;
 
     // The $resource service augments the response object with methods for updating and deleting the resource.
     // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
@@ -36,7 +36,7 @@
     // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
     // This allows us to inject a service but then attach it to a variable
     // with the same name as the service.
-    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _ArticlesService_) {
+    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _FreebiesService_) {
       // Set a new global scope
       $scope = $rootScope.$new();
 
@@ -44,10 +44,10 @@
       $httpBackend = _$httpBackend_;
       $state = _$state_;
       Authentication = _Authentication_;
-      FreebiesService = _ArticlesService_;
+      FreebiesService = _FreebiesService_;
 
       // create mock freebie
-      mockArticle = new FreebiesService({
+      mockFreebie = new FreebiesService({
         _id: '525a8422f6d0f87f0e407a33',
         title: 'An Freebie about MEAN',
         content: 'MEAN rocks!'
@@ -59,7 +59,7 @@
       };
 
       // Initialize the Freebies List controller.
-      ArticlesListController = $controller('ArticlesListController as vm', {
+      FreebiesListController = $controller('FreebiesListController as vm', {
         $scope: $scope
       });
 
@@ -68,23 +68,23 @@
     }));
 
     describe('Instantiate', function () {
-      var mockArticleList;
+      var mockFreebieList;
 
       beforeEach(function () {
-        mockArticleList = [mockArticle, mockArticle];
+        mockFreebieList = [mockFreebie, mockFreebie];
       });
 
       it('should send a GET request and return all freebies', inject(function (FreebiesService) {
         // Set POST response
-        $httpBackend.expectGET('api/freebies').respond(mockArticleList);
+        $httpBackend.expectGET('api/freebies').respond(mockFreebieList);
 
 
         $httpBackend.flush();
 
         // Test form inputs are reset
         expect($scope.vm.freebies.length).toEqual(2);
-        expect($scope.vm.freebies[0]).toEqual(mockArticle);
-        expect($scope.vm.freebies[1]).toEqual(mockArticle);
+        expect($scope.vm.freebies[0]).toEqual(mockFreebie);
+        expect($scope.vm.freebies[1]).toEqual(mockFreebie);
 
       }));
     });

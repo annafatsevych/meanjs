@@ -3,7 +3,7 @@
     <h1>Freebies</h1>
   </div>
   <div class="list-group">
-    <a ng-repeat="freebie in vm.freebies" ui-sref="freebies.view({ articleId: freebie._id })" class="list-group-item">
+    <a ng-repeat="freebie in vm.freebies" ui-sref="freebies.view({ freebieId: freebie._id })" class="list-group-item">
       <small class="list-group-item-text">
         Posted on
         <span ng-bind="freebie.created | date:'mediumDate'"></span>

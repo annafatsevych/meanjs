@@ -17,7 +17,7 @@
       .state('freebies.list', {
         url: '',
         templateUrl: 'modules/freebies/client/views/list-freebies.client.view.html',
-        controller: 'ArticlesListController',
+        controller: 'FreebiesListController',
         controllerAs: 'vm',
         data: {
           pageTitle: 'Freebies List'
@@ -29,7 +29,7 @@
         controller: 'FreebiesController',
         controllerAs: 'vm',
         resolve: {
-          articleResolve: newArticle
+          articleResolve: newFreebie
         },
         data: {
           roles: ['user', 'admin'],
@@ -37,12 +37,12 @@
         }
       })
       .state('freebies.edit', {
-        url: '/:articleId/edit',
+        url: '/:freebieId/edit',
         templateUrl: 'modules/freebies/client/views/form-freebie.client.view.html',
         controller: 'FreebiesController',
         controllerAs: 'vm',
         resolve: {
-          articleResolve: getArticle
+          articleResolve: getFreebie
         },
         data: {
           roles: ['user', 'admin'],
@@ -50,12 +50,12 @@
         }
       })
       .state('freebies.view', {
-        url: '/:articleId',
+        url: '/:freebieId',
         templateUrl: 'modules/freebies/client/views/view-freebie.client.view.html',
         controller: 'FreebiesController',
         controllerAs: 'vm',
         resolve: {
-          articleResolve: getArticle
+          articleResolve: getFreebie
         },
         data: {
           pageTitle: 'Freebie {{ articleResolve.title }}'
@@ -63,17 +63,17 @@
       });
   }
 
-  getArticle.$inject = ['$stateParams', 'FreebiesService'];
+  getFreebie.$inject = ['$stateParams', 'FreebiesService'];
 
-  function getArticle($stateParams, FreebiesService) {
+  function getFreebie($stateParams, FreebiesService) {
     return FreebiesService.get({
-      articleId: $stateParams.articleId
+      freebieId: $stateParams.freebieId
     }).$promise;
   }
 
-  newArticle.$inject = ['FreebiesService'];
+  newFreebie.$inject = ['FreebiesService'];
 
-  function newArticle(FreebiesService) {
+  function newFreebie(FreebiesService) {
     return new FreebiesService();
   }
 }());

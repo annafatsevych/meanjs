@@ -3,7 +3,7 @@
     <h1 ng-bind="vm.freebie.title"></h1>
   </div>
   <div class="pull-right" ng-show="vm.freebie.isCurrentUserOwner">
-    <a class="btn btn-primary" ui-sref="freebies.edit({ articleId: vm.freebie._id })">
+    <a class="btn btn-primary" ui-sref="freebies.edit({ freebieId: vm.freebie._id })">
       <i class="glyphicon glyphicon-edit"></i>
     </a>
     <a class="btn btn-primary" ng-click="vm.remove()">

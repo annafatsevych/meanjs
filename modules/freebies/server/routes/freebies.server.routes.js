@@ -13,11 +13,11 @@ module.exports = function (app) {
     .post(freebies.create);
 
   // Single freebie routes
-  app.route('/api/freebies/:articleId').all(articlesPolicy.isAllowed)
+  app.route('/api/freebies/:freebieId').all(articlesPolicy.isAllowed)
     .get(freebies.read)
     .put(freebies.update)
     .delete(freebies.delete);
 
   // Finish by binding the freebie middleware
-  app.param('articleId', freebies.articleByID);
+  app.param('freebieId', freebies.articleByID);
 };

@@ -9,7 +9,7 @@
       $state,
       Authentication,
       FreebiesService,
-      mockArticle;
+      mockFreebie;
 
     // The $resource service augments the response object with methods for updating and deleting the resource.
     // If we were to use the standard toEqual matcher, our tests would fail because the test values would not match
@@ -36,7 +36,7 @@
     // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
     // This allows us to inject a service but then attach it to a variable
     // with the same name as the service.
-    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _ArticlesService_) {
+    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _FreebiesService_) {
       // Set a new global scope
       $scope = $rootScope.$new();
 
@@ -44,10 +44,10 @@
       $httpBackend = _$httpBackend_;
       $state = _$state_;
       Authentication = _Authentication_;
-      FreebiesService = _ArticlesService_;
+      FreebiesService = _FreebiesService_;
 
       // create mock freebie
-      mockArticle = new FreebiesService({
+      mockFreebie = new FreebiesService({
         _id: '525a8422f6d0f87f0e407a33',
         title: 'An Freebie about MEAN',
         content: 'MEAN rocks!'
@@ -69,21 +69,21 @@
     }));
 
     describe('vm.save() as create', function () {
-      var sampleArticlePostData;
+      var sampleFreebiePostData;
 
       beforeEach(function () {
         // Create a sample freebie object
-        sampleArticlePostData = new FreebiesService({
+        sampleFreebiePostData = new FreebiesService({
           title: 'An Freebie about MEAN',
           content: 'MEAN rocks!'
         });
 
-        $scope.vm.freebie = sampleArticlePostData;
+        $scope.vm.freebie = sampleFreebiePostData;
       });
 
       it('should send a POST request with the form input values and then locate to new object URL', inject(function (FreebiesService) {
         // Set POST response
-        $httpBackend.expectPOST('api/freebies', sampleArticlePostData).respond(mockArticle);
+        $httpBackend.expectPOST('api/freebies', sampleFreebiePostData).respond(mockFreebie);
 
         // Run controller functionality
         $scope.vm.save(true);
@@ -91,13 +91,13 @@
 
         // Test URL redirection after the freebie was created
         expect($state.go).toHaveBeenCalledWith('freebies.view', {
-          articleId: mockArticle._id
+          freebieId: mockFreebie._id
         });
       }));
 
       it('should set $scope.vm.error if error', function () {
         var errorMessage = 'this is an error message';
-        $httpBackend.expectPOST('api/freebies', sampleArticlePostData).respond(400, {
+        $httpBackend.expectPOST('api/freebies', sampleFreebiePostData).respond(400, {
           message: errorMessage
         });
 
@@ -111,7 +111,7 @@
     describe('vm.save() as update', function () {
       beforeEach(function () {
         // Mock freebie in $scope
-        $scope.vm.freebie = mockArticle;
+        $scope.vm.freebie = mockFreebie;
       });
 
       it('should update a valid freebie', inject(function (FreebiesService) {
@@ -124,7 +124,7 @@
 
         // Test URL location to new object
         expect($state.go).toHaveBeenCalledWith('freebies.view', {
-          articleId: mockArticle._id
+          freebieId: mockFreebie._id
         });
       }));
 
@@ -144,7 +144,7 @@
     describe('vm.remove()', function () {
       beforeEach(function () {
         // Setup freebies
-        $scope.vm.freebie = mockArticle;
+        $scope.vm.freebie = mockFreebie;
       });
 
       it('should delete the freebie and redirect to freebies', function () {

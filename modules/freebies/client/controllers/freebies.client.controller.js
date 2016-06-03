@@ -40,7 +40,7 @@
 
       function successCallback(res) {
         $state.go('freebies.view', {
-          articleId: res._id
+          freebieId: res._id
         });
       }
 
