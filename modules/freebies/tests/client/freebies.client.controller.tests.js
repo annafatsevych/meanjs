@@ -3,7 +3,7 @@
 
   describe('Freebies Controller Tests', function () {
     // Initialize global variables
-    var ArticlesController,
+    var FreebiesController,
       $scope,
       $httpBackend,
       $state,
@@ -59,7 +59,7 @@
       };
 
       // Initialize the Freebies controller.
-      ArticlesController = $controller('ArticlesController as vm', {
+      FreebiesController = $controller('FreebiesController as vm', {
         $scope: $scope,
         articleResolve: {}
       });

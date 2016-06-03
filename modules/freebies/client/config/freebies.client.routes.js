@@ -26,7 +26,7 @@
       .state('freebies.create', {
         url: '/create',
         templateUrl: 'modules/freebies/client/views/form-freebie.client.view.html',
-        controller: 'ArticlesController',
+        controller: 'FreebiesController',
         controllerAs: 'vm',
         resolve: {
           articleResolve: newArticle
@@ -39,7 +39,7 @@
       .state('freebies.edit', {
         url: '/:articleId/edit',
         templateUrl: 'modules/freebies/client/views/form-freebie.client.view.html',
-        controller: 'ArticlesController',
+        controller: 'FreebiesController',
         controllerAs: 'vm',
         resolve: {
           articleResolve: getArticle
@@ -52,7 +52,7 @@
       .state('freebies.view', {
         url: '/:articleId',
         templateUrl: 'modules/freebies/client/views/view-freebie.client.view.html',
-        controller: 'ArticlesController',
+        controller: 'FreebiesController',
         controllerAs: 'vm',
         resolve: {
           articleResolve: getArticle

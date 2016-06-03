@@ -3,11 +3,11 @@
 
   angular
     .module('freebies')
-    .controller('ArticlesController', ArticlesController);
+    .controller('FreebiesController', FreebiesController);
 
-  ArticlesController.$inject = ['$scope', '$state', 'articleResolve', '$window', 'Authentication'];
+  FreebiesController.$inject = ['$scope', '$state', 'articleResolve', '$window', 'Authentication'];
 
-  function ArticlesController($scope, $state, freebie, $window, Authentication) {
+  function FreebiesController($scope, $state, freebie, $window, Authentication) {
     var vm = this;
 
     vm.freebie = freebie;

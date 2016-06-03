@@ -59,7 +59,7 @@
 
       describe('View Route', function () {
         var viewstate,
-          ArticlesController,
+          FreebiesController,
           mockArticle;
 
         beforeEach(inject(function ($controller, $state, $templateCache) {
@@ -74,7 +74,7 @@
           });
 
           // Initialize Controller
-          ArticlesController = $controller('ArticlesController as vm', {
+          FreebiesController = $controller('FreebiesController as vm', {
             $scope: $scope,
             articleResolve: mockArticle
           });
@@ -110,7 +110,7 @@
 
       describe('Create Route', function () {
         var createstate,
-          ArticlesController,
+          FreebiesController,
           mockArticle;
 
         beforeEach(inject(function ($controller, $state, $templateCache) {
@@ -121,7 +121,7 @@
           mockArticle = new FreebiesService();
 
           // Initialize Controller
-          ArticlesController = $controller('ArticlesController as vm', {
+          FreebiesController = $controller('FreebiesController as vm', {
             $scope: $scope,
             articleResolve: mockArticle
           });
@@ -156,7 +156,7 @@
 
       describe('Edit Route', function () {
         var editstate,
-          ArticlesController,
+          FreebiesController,
           mockArticle;
 
         beforeEach(inject(function ($controller, $state, $templateCache) {
@@ -171,7 +171,7 @@
           });
 
           // Initialize Controller
-          ArticlesController = $controller('ArticlesController as vm', {
+          FreebiesController = $controller('FreebiesController as vm', {
             $scope: $scope,
             articleResolve: mockArticle
           });
