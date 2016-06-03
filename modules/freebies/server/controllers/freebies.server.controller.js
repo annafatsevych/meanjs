@@ -5,113 +5,113 @@
  */
 var path = require('path'),
   mongoose = require('mongoose'),
-  Article = mongoose.model('Article'),
+  Freebie = mongoose.model('Freebie'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
- * Create an article
+ * Create an freebie
  */
 exports.create = function (req, res) {
-  var article = new Article(req.body);
-  article.user = req.user;
+  var freebie = new Freebie(req.body);
+  freebie.user = req.user;
 
-  article.save(function (err) {
+  freebie.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.json(freebie);
     }
   });
 };
 
 /**
- * Show the current article
+ * Show the current freebie
  */
 exports.read = function (req, res) {
   // convert mongoose document to JSON
-  var article = req.article ? req.article.toJSON() : {};
+  var freebie = req.freebie ? req.freebie.toJSON() : {};
 
-  // Add a custom field to the Article, for determining if the current User is the "owner".
-  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
-  article.isCurrentUserOwner = !!(req.user && article.user && article.user._id.toString() === req.user._id.toString());
+  // Add a custom field to the Freebie, for determining if the current User is the "owner".
+  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Freebie model.
+  freebie.isCurrentUserOwner = !!(req.user && freebie.user && freebie.user._id.toString() === req.user._id.toString());
 
-  res.json(article);
+  res.json(freebie);
 };
 
 /**
- * Update an article
+ * Update an freebie
  */
 exports.update = function (req, res) {
-  var article = req.article;
+  var freebie = req.freebie;
 
-  article.title = req.body.title;
-  article.content = req.body.content;
+  freebie.title = req.body.title;
+  freebie.content = req.body.content;
 
-  article.save(function (err) {
+  freebie.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.json(freebie);
     }
   });
 };
 
 /**
- * Delete an article
+ * Delete an freebie
  */
 exports.delete = function (req, res) {
-  var article = req.article;
+  var freebie = req.freebie;
 
-  article.remove(function (err) {
+  freebie.remove(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(article);
+      res.json(freebie);
     }
   });
 };
 
 /**
- * List of Articles
+ * List of Freebies
  */
 exports.list = function (req, res) {
-  Article.find().sort('-created').populate('user', 'displayName').exec(function (err, articles) {
+  Freebie.find().sort('-created').populate('user', 'displayName').exec(function (err, freebies) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(articles);
+      res.json(freebies);
     }
   });
 };
 
 /**
- * Article middleware
+ * Freebie middleware
  */
 exports.articleByID = function (req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
-      message: 'Article is invalid'
+      message: 'Freebie is invalid'
     });
   }
 
-  Article.findById(id).populate('user', 'displayName').exec(function (err, article) {
+  Freebie.findById(id).populate('user', 'displayName').exec(function (err, freebie) {
     if (err) {
       return next(err);
-    } else if (!article) {
+    } else if (!freebie) {
       return res.status(404).send({
-        message: 'No article with that identifier has been found'
+        message: 'No freebie with that identifier has been found'
       });
     }
-    req.article = article;
+    req.freebie = freebie;
     next();
   });
 };

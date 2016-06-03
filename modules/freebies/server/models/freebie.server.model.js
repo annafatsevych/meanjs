@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 /**
- * Article Schema
+ * Freebie Schema
  */
 var ArticleSchema = new Schema({
   created: {
@@ -31,4 +31,4 @@ var ArticleSchema = new Schema({
   }
 });
 
-mongoose.model('Article', ArticleSchema);
+mongoose.model('Freebie', ArticleSchema);

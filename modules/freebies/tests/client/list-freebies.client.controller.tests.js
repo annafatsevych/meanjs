@@ -1,14 +1,14 @@
 (function () {
   'use strict';
 
-  describe('Articles List Controller Tests', function () {
+  describe('Freebies List Controller Tests', function () {
     // Initialize global variables
     var ArticlesListController,
       $scope,
       $httpBackend,
       $state,
       Authentication,
-      ArticlesService,
+      FreebiesService,
       mockArticle;
 
     // The $resource service augments the response object with methods for updating and deleting the resource.
@@ -44,12 +44,12 @@
       $httpBackend = _$httpBackend_;
       $state = _$state_;
       Authentication = _Authentication_;
-      ArticlesService = _ArticlesService_;
+      FreebiesService = _ArticlesService_;
 
-      // create mock article
-      mockArticle = new ArticlesService({
+      // create mock freebie
+      mockArticle = new FreebiesService({
         _id: '525a8422f6d0f87f0e407a33',
-        title: 'An Article about MEAN',
+        title: 'An Freebie about MEAN',
         content: 'MEAN rocks!'
       });
 
@@ -58,7 +58,7 @@
         roles: ['user']
       };
 
-      // Initialize the Articles List controller.
+      // Initialize the Freebies List controller.
       ArticlesListController = $controller('ArticlesListController as vm', {
         $scope: $scope
       });
@@ -74,17 +74,17 @@
         mockArticleList = [mockArticle, mockArticle];
       });
 
-      it('should send a GET request and return all articles', inject(function (ArticlesService) {
+      it('should send a GET request and return all freebies', inject(function (FreebiesService) {
         // Set POST response
-        $httpBackend.expectGET('api/articles').respond(mockArticleList);
+        $httpBackend.expectGET('api/freebies').respond(mockArticleList);
 
 
         $httpBackend.flush();
 
         // Test form inputs are reset
-        expect($scope.vm.articles.length).toEqual(2);
-        expect($scope.vm.articles[0]).toEqual(mockArticle);
-        expect($scope.vm.articles[1]).toEqual(mockArticle);
+        expect($scope.vm.freebies.length).toEqual(2);
+        expect($scope.vm.freebies[0]).toEqual(mockArticle);
+        expect($scope.vm.freebies[1]).toEqual(mockArticle);
 
       }));
     });

@@ -5,7 +5,7 @@ var should = require('should'),
   path = require('path'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
-  Article = mongoose.model('Article'),
+  Freebie = mongoose.model('Freebie'),
   express = require(path.resolve('./config/lib/express'));
 
 /**
@@ -15,12 +15,12 @@ var app,
   agent,
   credentials,
   user,
-  article;
+  freebie;
 
 /**
- * Article routes tests
+ * Freebie routes tests
  */
-describe('Article CRUD tests', function () {
+describe('Freebie CRUD tests', function () {
 
   before(function (done) {
     // Get application
@@ -48,18 +48,18 @@ describe('Article CRUD tests', function () {
       provider: 'local'
     });
 
-    // Save a user to the test db and create new article
+    // Save a user to the test db and create new freebie
     user.save(function () {
-      article = {
-        title: 'Article Title',
-        content: 'Article Content'
+      freebie = {
+        title: 'Freebie Title',
+        content: 'Freebie Content'
       };
 
       done();
     });
   });
 
-  it('should be able to save an article if logged in', function (done) {
+  it('should be able to save an freebie if logged in', function (done) {
     agent.post('/api/auth/signin')
       .send(credentials)
       .expect(200)
@@ -72,30 +72,30 @@ describe('Article CRUD tests', function () {
         // Get the userId
         var userId = user.id;
 
-        // Save a new article
-        agent.post('/api/articles')
-          .send(article)
+        // Save a new freebie
+        agent.post('/api/freebies')
+          .send(freebie)
           .expect(200)
           .end(function (articleSaveErr, articleSaveRes) {
-            // Handle article save error
+            // Handle freebie save error
             if (articleSaveErr) {
               return done(articleSaveErr);
             }
 
-            // Get a list of articles
-            agent.get('/api/articles')
+            // Get a list of freebies
+            agent.get('/api/freebies')
               .end(function (articlesGetErr, articlesGetRes) {
-                // Handle article save error
+                // Handle freebie save error
                 if (articlesGetErr) {
                   return done(articlesGetErr);
                 }
 
-                // Get articles list
-                var articles = articlesGetRes.body;
+                // Get freebies list
+                var freebies = articlesGetRes.body;
 
                 // Set assertions
-                (articles[0].user._id).should.equal(userId);
-                (articles[0].title).should.match('Article Title');
+                (freebies[0].user._id).should.equal(userId);
+                (freebies[0].title).should.match('Freebie Title');
 
                 // Call the assertion callback
                 done();
@@ -104,9 +104,9 @@ describe('Article CRUD tests', function () {
       });
   });
 
-  it('should not be able to save an article if not logged in', function (done) {
-    agent.post('/api/articles')
-      .send(article)
+  it('should not be able to save an freebie if not logged in', function (done) {
+    agent.post('/api/freebies')
+      .send(freebie)
       .expect(403)
       .end(function (articleSaveErr, articleSaveRes) {
         // Call the assertion callback
@@ -114,9 +114,9 @@ describe('Article CRUD tests', function () {
       });
   });
 
-  it('should not be able to save an article if no title is provided', function (done) {
+  it('should not be able to save an freebie if no title is provided', function (done) {
     // Invalidate title field
-    article.title = '';
+    freebie.title = '';
 
     agent.post('/api/auth/signin')
       .send(credentials)
@@ -130,21 +130,21 @@ describe('Article CRUD tests', function () {
         // Get the userId
         var userId = user.id;
 
-        // Save a new article
-        agent.post('/api/articles')
-          .send(article)
+        // Save a new freebie
+        agent.post('/api/freebies')
+          .send(freebie)
           .expect(400)
           .end(function (articleSaveErr, articleSaveRes) {
             // Set message assertion
             (articleSaveRes.body.message).should.match('Title cannot be blank');
 
-            // Handle article save error
+            // Handle freebie save error
             done(articleSaveErr);
           });
       });
   });
 
-  it('should be able to update an article if signed in', function (done) {
+  it('should be able to update an freebie if signed in', function (done) {
     agent.post('/api/auth/signin')
       .send(credentials)
       .expect(200)
@@ -157,25 +157,25 @@ describe('Article CRUD tests', function () {
         // Get the userId
         var userId = user.id;
 
-        // Save a new article
-        agent.post('/api/articles')
-          .send(article)
+        // Save a new freebie
+        agent.post('/api/freebies')
+          .send(freebie)
           .expect(200)
           .end(function (articleSaveErr, articleSaveRes) {
-            // Handle article save error
+            // Handle freebie save error
             if (articleSaveErr) {
               return done(articleSaveErr);
             }
 
-            // Update article title
-            article.title = 'WHY YOU GOTTA BE SO MEAN?';
+            // Update freebie title
+            freebie.title = 'WHY YOU GOTTA BE SO MEAN?';
 
-            // Update an existing article
-            agent.put('/api/articles/' + articleSaveRes.body._id)
-              .send(article)
+            // Update an existing freebie
+            agent.put('/api/freebies/' + articleSaveRes.body._id)
+              .send(freebie)
               .expect(200)
               .end(function (articleUpdateErr, articleUpdateRes) {
-                // Handle article update error
+                // Handle freebie update error
                 if (articleUpdateErr) {
                   return done(articleUpdateErr);
                 }
@@ -191,14 +191,14 @@ describe('Article CRUD tests', function () {
       });
   });
 
-  it('should be able to get a list of articles if not signed in', function (done) {
-    // Create new article model instance
-    var articleObj = new Article(article);
+  it('should be able to get a list of freebies if not signed in', function (done) {
+    // Create new freebie model instance
+    var articleObj = new Freebie(freebie);
 
-    // Save the article
+    // Save the freebie
     articleObj.save(function () {
-      // Request articles
-      request(app).get('/api/articles')
+      // Request freebies
+      request(app).get('/api/freebies')
         .end(function (req, res) {
           // Set assertion
           res.body.should.be.instanceof(Array).and.have.lengthOf(1);
@@ -210,16 +210,16 @@ describe('Article CRUD tests', function () {
     });
   });
 
-  it('should be able to get a single article if not signed in', function (done) {
-    // Create new article model instance
-    var articleObj = new Article(article);
+  it('should be able to get a single freebie if not signed in', function (done) {
+    // Create new freebie model instance
+    var articleObj = new Freebie(freebie);
 
-    // Save the article
+    // Save the freebie
     articleObj.save(function () {
-      request(app).get('/api/articles/' + articleObj._id)
+      request(app).get('/api/freebies/' + articleObj._id)
         .end(function (req, res) {
           // Set assertion
-          res.body.should.be.instanceof(Object).and.have.property('title', article.title);
+          res.body.should.be.instanceof(Object).and.have.property('title', freebie.title);
 
           // Call the assertion callback
           done();
@@ -227,31 +227,31 @@ describe('Article CRUD tests', function () {
     });
   });
 
-  it('should return proper error for single article with an invalid Id, if not signed in', function (done) {
+  it('should return proper error for single freebie with an invalid Id, if not signed in', function (done) {
     // test is not a valid mongoose Id
-    request(app).get('/api/articles/test')
+    request(app).get('/api/freebies/test')
       .end(function (req, res) {
         // Set assertion
-        res.body.should.be.instanceof(Object).and.have.property('message', 'Article is invalid');
+        res.body.should.be.instanceof(Object).and.have.property('message', 'Freebie is invalid');
 
         // Call the assertion callback
         done();
       });
   });
 
-  it('should return proper error for single article which doesnt exist, if not signed in', function (done) {
-    // This is a valid mongoose Id but a non-existent article
-    request(app).get('/api/articles/559e9cd815f80b4c256a8f41')
+  it('should return proper error for single freebie which doesnt exist, if not signed in', function (done) {
+    // This is a valid mongoose Id but a non-existent freebie
+    request(app).get('/api/freebies/559e9cd815f80b4c256a8f41')
       .end(function (req, res) {
         // Set assertion
-        res.body.should.be.instanceof(Object).and.have.property('message', 'No article with that identifier has been found');
+        res.body.should.be.instanceof(Object).and.have.property('message', 'No freebie with that identifier has been found');
 
         // Call the assertion callback
         done();
       });
   });
 
-  it('should be able to delete an article if signed in', function (done) {
+  it('should be able to delete an freebie if signed in', function (done) {
     agent.post('/api/auth/signin')
       .send(credentials)
       .expect(200)
@@ -264,22 +264,22 @@ describe('Article CRUD tests', function () {
         // Get the userId
         var userId = user.id;
 
-        // Save a new article
-        agent.post('/api/articles')
-          .send(article)
+        // Save a new freebie
+        agent.post('/api/freebies')
+          .send(freebie)
           .expect(200)
           .end(function (articleSaveErr, articleSaveRes) {
-            // Handle article save error
+            // Handle freebie save error
             if (articleSaveErr) {
               return done(articleSaveErr);
             }
 
-            // Delete an existing article
-            agent.delete('/api/articles/' + articleSaveRes.body._id)
-              .send(article)
+            // Delete an existing freebie
+            agent.delete('/api/freebies/' + articleSaveRes.body._id)
+              .send(freebie)
               .expect(200)
               .end(function (articleDeleteErr, articleDeleteRes) {
-                // Handle article error error
+                // Handle freebie error error
                 if (articleDeleteErr) {
                   return done(articleDeleteErr);
                 }
@@ -294,30 +294,30 @@ describe('Article CRUD tests', function () {
       });
   });
 
-  it('should not be able to delete an article if not signed in', function (done) {
-    // Set article user
-    article.user = user;
+  it('should not be able to delete an freebie if not signed in', function (done) {
+    // Set freebie user
+    freebie.user = user;
 
-    // Create new article model instance
-    var articleObj = new Article(article);
+    // Create new freebie model instance
+    var articleObj = new Freebie(freebie);
 
-    // Save the article
+    // Save the freebie
     articleObj.save(function () {
-      // Try deleting article
-      request(app).delete('/api/articles/' + articleObj._id)
+      // Try deleting freebie
+      request(app).delete('/api/freebies/' + articleObj._id)
         .expect(403)
         .end(function (articleDeleteErr, articleDeleteRes) {
           // Set message assertion
           (articleDeleteRes.body.message).should.match('User is not authorized');
 
-          // Handle article error error
+          // Handle freebie error error
           done(articleDeleteErr);
         });
 
     });
   });
 
-  it('should be able to get a single article that has an orphaned user reference', function (done) {
+  it('should be able to get a single freebie that has an orphaned user reference', function (done) {
     // Create orphan user creds
     var _creds = {
       username: 'orphan',
@@ -353,22 +353,22 @@ describe('Article CRUD tests', function () {
           // Get the userId
           var orphanId = orphan._id;
 
-          // Save a new article
-          agent.post('/api/articles')
-            .send(article)
+          // Save a new freebie
+          agent.post('/api/freebies')
+            .send(freebie)
             .expect(200)
             .end(function (articleSaveErr, articleSaveRes) {
-              // Handle article save error
+              // Handle freebie save error
               if (articleSaveErr) {
                 return done(articleSaveErr);
               }
 
-              // Set assertions on new article
-              (articleSaveRes.body.title).should.equal(article.title);
+              // Set assertions on new freebie
+              (articleSaveRes.body.title).should.equal(freebie.title);
               should.exist(articleSaveRes.body.user);
               should.equal(articleSaveRes.body.user._id, orphanId);
 
-              // force the article to have an orphaned user reference
+              // force the freebie to have an orphaned user reference
               orphan.remove(function () {
                 // now signin with valid user
                 agent.post('/api/auth/signin')
@@ -380,18 +380,18 @@ describe('Article CRUD tests', function () {
                       return done(err);
                     }
 
-                    // Get the article
-                    agent.get('/api/articles/' + articleSaveRes.body._id)
+                    // Get the freebie
+                    agent.get('/api/freebies/' + articleSaveRes.body._id)
                       .expect(200)
                       .end(function (articleInfoErr, articleInfoRes) {
-                        // Handle article error
+                        // Handle freebie error
                         if (articleInfoErr) {
                           return done(articleInfoErr);
                         }
 
                         // Set assertions
                         (articleInfoRes.body._id).should.equal(articleSaveRes.body._id);
-                        (articleInfoRes.body.title).should.equal(article.title);
+                        (articleInfoRes.body.title).should.equal(freebie.title);
                         should.equal(articleInfoRes.body.user, undefined);
 
                         // Call the assertion callback
@@ -404,12 +404,12 @@ describe('Article CRUD tests', function () {
     });
   });
 
-  it('should be able to get a single article if signed in and verify the custom "isCurrentUserOwner" field is set to "true"', function (done) {
-    // Create new article model instance
-    article.user = user;
-    var articleObj = new Article(article);
+  it('should be able to get a single freebie if signed in and verify the custom "isCurrentUserOwner" field is set to "true"', function (done) {
+    // Create new freebie model instance
+    freebie.user = user;
+    var articleObj = new Freebie(freebie);
 
-    // Save the article
+    // Save the freebie
     articleObj.save(function () {
       agent.post('/api/auth/signin')
         .send(credentials)
@@ -423,28 +423,28 @@ describe('Article CRUD tests', function () {
           // Get the userId
           var userId = user.id;
 
-          // Save a new article
-          agent.post('/api/articles')
-            .send(article)
+          // Save a new freebie
+          agent.post('/api/freebies')
+            .send(freebie)
             .expect(200)
             .end(function (articleSaveErr, articleSaveRes) {
-              // Handle article save error
+              // Handle freebie save error
               if (articleSaveErr) {
                 return done(articleSaveErr);
               }
 
-              // Get the article
-              agent.get('/api/articles/' + articleSaveRes.body._id)
+              // Get the freebie
+              agent.get('/api/freebies/' + articleSaveRes.body._id)
                 .expect(200)
                 .end(function (articleInfoErr, articleInfoRes) {
-                  // Handle article error
+                  // Handle freebie error
                   if (articleInfoErr) {
                     return done(articleInfoErr);
                   }
 
                   // Set assertions
                   (articleInfoRes.body._id).should.equal(articleSaveRes.body._id);
-                  (articleInfoRes.body.title).should.equal(article.title);
+                  (articleInfoRes.body.title).should.equal(freebie.title);
 
                   // Assert that the "isCurrentUserOwner" field is set to true since the current User created it
                   (articleInfoRes.body.isCurrentUserOwner).should.equal(true);
@@ -457,16 +457,16 @@ describe('Article CRUD tests', function () {
     });
   });
 
-  it('should be able to get a single article if not signed in and verify the custom "isCurrentUserOwner" field is set to "false"', function (done) {
-    // Create new article model instance
-    var articleObj = new Article(article);
+  it('should be able to get a single freebie if not signed in and verify the custom "isCurrentUserOwner" field is set to "false"', function (done) {
+    // Create new freebie model instance
+    var articleObj = new Freebie(freebie);
 
-    // Save the article
+    // Save the freebie
     articleObj.save(function () {
-      request(app).get('/api/articles/' + articleObj._id)
+      request(app).get('/api/freebies/' + articleObj._id)
         .end(function (req, res) {
           // Set assertion
-          res.body.should.be.instanceof(Object).and.have.property('title', article.title);
+          res.body.should.be.instanceof(Object).and.have.property('title', freebie.title);
           // Assert the custom field "isCurrentUserOwner" is set to false for the un-authenticated User
           res.body.should.be.instanceof(Object).and.have.property('isCurrentUserOwner', false);
           // Call the assertion callback
@@ -475,7 +475,7 @@ describe('Article CRUD tests', function () {
     });
   });
 
-  it('should be able to get single article, that a different user created, if logged in & verify the "isCurrentUserOwner" field is set to "false"', function (done) {
+  it('should be able to get single freebie, that a different user created, if logged in & verify the "isCurrentUserOwner" field is set to "false"', function (done) {
     // Create temporary user creds
     var _creds = {
       username: 'temp',
@@ -499,7 +499,7 @@ describe('Article CRUD tests', function () {
         return done(err);
       }
 
-      // Sign in with the user that will create the Article
+      // Sign in with the user that will create the Freebie
       agent.post('/api/auth/signin')
         .send(credentials)
         .expect(200)
@@ -512,18 +512,18 @@ describe('Article CRUD tests', function () {
           // Get the userId
           var userId = user._id;
 
-          // Save a new article
-          agent.post('/api/articles')
-            .send(article)
+          // Save a new freebie
+          agent.post('/api/freebies')
+            .send(freebie)
             .expect(200)
             .end(function (articleSaveErr, articleSaveRes) {
-              // Handle article save error
+              // Handle freebie save error
               if (articleSaveErr) {
                 return done(articleSaveErr);
               }
 
-              // Set assertions on new article
-              (articleSaveRes.body.title).should.equal(article.title);
+              // Set assertions on new freebie
+              (articleSaveRes.body.title).should.equal(freebie.title);
               should.exist(articleSaveRes.body.user);
               should.equal(articleSaveRes.body.user._id, userId);
 
@@ -537,18 +537,18 @@ describe('Article CRUD tests', function () {
                     return done(err);
                   }
 
-                  // Get the article
-                  agent.get('/api/articles/' + articleSaveRes.body._id)
+                  // Get the freebie
+                  agent.get('/api/freebies/' + articleSaveRes.body._id)
                     .expect(200)
                     .end(function (articleInfoErr, articleInfoRes) {
-                      // Handle article error
+                      // Handle freebie error
                       if (articleInfoErr) {
                         return done(articleInfoErr);
                       }
 
                       // Set assertions
                       (articleInfoRes.body._id).should.equal(articleSaveRes.body._id);
-                      (articleInfoRes.body.title).should.equal(article.title);
+                      (articleInfoRes.body.title).should.equal(freebie.title);
                       // Assert that the custom field "isCurrentUserOwner" is set to false since the current User didn't create it
                       (articleInfoRes.body.isCurrentUserOwner).should.equal(false);
 
@@ -563,7 +563,7 @@ describe('Article CRUD tests', function () {
 
   afterEach(function (done) {
     User.remove().exec(function () {
-      Article.remove().exec(done);
+      Freebie.remove().exec(done);
     });
   });
 });

@@ -2,30 +2,30 @@
   'use strict';
 
   angular
-    .module('articles.routes')
+    .module('freebies.routes')
     .config(routeConfig);
 
   routeConfig.$inject = ['$stateProvider'];
 
   function routeConfig($stateProvider) {
     $stateProvider
-      .state('articles', {
+      .state('freebies', {
         abstract: true,
-        url: '/articles',
+        url: '/freebies',
         template: '<ui-view/>'
       })
-      .state('articles.list', {
+      .state('freebies.list', {
         url: '',
-        templateUrl: 'modules/articles/client/views/list-articles.client.view.html',
+        templateUrl: 'modules/freebies/client/views/list-freebies.client.view.html',
         controller: 'ArticlesListController',
         controllerAs: 'vm',
         data: {
-          pageTitle: 'Articles List'
+          pageTitle: 'Freebies List'
         }
       })
-      .state('articles.create', {
+      .state('freebies.create', {
         url: '/create',
-        templateUrl: 'modules/articles/client/views/form-article.client.view.html',
+        templateUrl: 'modules/freebies/client/views/form-freebie.client.view.html',
         controller: 'ArticlesController',
         controllerAs: 'vm',
         resolve: {
@@ -33,12 +33,12 @@
         },
         data: {
           roles: ['user', 'admin'],
-          pageTitle: 'Articles Create'
+          pageTitle: 'Freebies Create'
         }
       })
-      .state('articles.edit', {
+      .state('freebies.edit', {
         url: '/:articleId/edit',
-        templateUrl: 'modules/articles/client/views/form-article.client.view.html',
+        templateUrl: 'modules/freebies/client/views/form-freebie.client.view.html',
         controller: 'ArticlesController',
         controllerAs: 'vm',
         resolve: {
@@ -46,34 +46,34 @@
         },
         data: {
           roles: ['user', 'admin'],
-          pageTitle: 'Edit Article {{ articleResolve.title }}'
+          pageTitle: 'Edit Freebie {{ articleResolve.title }}'
         }
       })
-      .state('articles.view', {
+      .state('freebies.view', {
         url: '/:articleId',
-        templateUrl: 'modules/articles/client/views/view-article.client.view.html',
+        templateUrl: 'modules/freebies/client/views/view-freebie.client.view.html',
         controller: 'ArticlesController',
         controllerAs: 'vm',
         resolve: {
           articleResolve: getArticle
         },
         data: {
-          pageTitle: 'Article {{ articleResolve.title }}'
+          pageTitle: 'Freebie {{ articleResolve.title }}'
         }
       });
   }
 
-  getArticle.$inject = ['$stateParams', 'ArticlesService'];
+  getArticle.$inject = ['$stateParams', 'FreebiesService'];
 
-  function getArticle($stateParams, ArticlesService) {
-    return ArticlesService.get({
+  function getArticle($stateParams, FreebiesService) {
+    return FreebiesService.get({
       articleId: $stateParams.articleId
     }).$promise;
   }
 
-  newArticle.$inject = ['ArticlesService'];
+  newArticle.$inject = ['FreebiesService'];
 
-  function newArticle(ArticlesService) {
-    return new ArticlesService();
+  function newArticle(FreebiesService) {
+    return new FreebiesService();
   }
 }());

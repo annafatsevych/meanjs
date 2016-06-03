@@ -1,14 +1,14 @@
 (function () {
   'use strict';
 
-  describe('Articles Controller Tests', function () {
+  describe('Freebies Controller Tests', function () {
     // Initialize global variables
     var ArticlesController,
       $scope,
       $httpBackend,
       $state,
       Authentication,
-      ArticlesService,
+      FreebiesService,
       mockArticle;
 
     // The $resource service augments the response object with methods for updating and deleting the resource.
@@ -44,12 +44,12 @@
       $httpBackend = _$httpBackend_;
       $state = _$state_;
       Authentication = _Authentication_;
-      ArticlesService = _ArticlesService_;
+      FreebiesService = _ArticlesService_;
 
-      // create mock article
-      mockArticle = new ArticlesService({
+      // create mock freebie
+      mockArticle = new FreebiesService({
         _id: '525a8422f6d0f87f0e407a33',
-        title: 'An Article about MEAN',
+        title: 'An Freebie about MEAN',
         content: 'MEAN rocks!'
       });
 
@@ -58,7 +58,7 @@
         roles: ['user']
       };
 
-      // Initialize the Articles controller.
+      // Initialize the Freebies controller.
       ArticlesController = $controller('ArticlesController as vm', {
         $scope: $scope,
         articleResolve: {}
@@ -72,32 +72,32 @@
       var sampleArticlePostData;
 
       beforeEach(function () {
-        // Create a sample article object
-        sampleArticlePostData = new ArticlesService({
-          title: 'An Article about MEAN',
+        // Create a sample freebie object
+        sampleArticlePostData = new FreebiesService({
+          title: 'An Freebie about MEAN',
           content: 'MEAN rocks!'
         });
 
-        $scope.vm.article = sampleArticlePostData;
+        $scope.vm.freebie = sampleArticlePostData;
       });
 
-      it('should send a POST request with the form input values and then locate to new object URL', inject(function (ArticlesService) {
+      it('should send a POST request with the form input values and then locate to new object URL', inject(function (FreebiesService) {
         // Set POST response
-        $httpBackend.expectPOST('api/articles', sampleArticlePostData).respond(mockArticle);
+        $httpBackend.expectPOST('api/freebies', sampleArticlePostData).respond(mockArticle);
 
         // Run controller functionality
         $scope.vm.save(true);
         $httpBackend.flush();
 
-        // Test URL redirection after the article was created
-        expect($state.go).toHaveBeenCalledWith('articles.view', {
+        // Test URL redirection after the freebie was created
+        expect($state.go).toHaveBeenCalledWith('freebies.view', {
           articleId: mockArticle._id
         });
       }));
 
       it('should set $scope.vm.error if error', function () {
         var errorMessage = 'this is an error message';
-        $httpBackend.expectPOST('api/articles', sampleArticlePostData).respond(400, {
+        $httpBackend.expectPOST('api/freebies', sampleArticlePostData).respond(400, {
           message: errorMessage
         });
 
@@ -110,27 +110,27 @@
 
     describe('vm.save() as update', function () {
       beforeEach(function () {
-        // Mock article in $scope
-        $scope.vm.article = mockArticle;
+        // Mock freebie in $scope
+        $scope.vm.freebie = mockArticle;
       });
 
-      it('should update a valid article', inject(function (ArticlesService) {
+      it('should update a valid freebie', inject(function (FreebiesService) {
         // Set PUT response
-        $httpBackend.expectPUT(/api\/articles\/([0-9a-fA-F]{24})$/).respond();
+        $httpBackend.expectPUT(/api\/freebies\/([0-9a-fA-F]{24})$/).respond();
 
         // Run controller functionality
         $scope.vm.save(true);
         $httpBackend.flush();
 
         // Test URL location to new object
-        expect($state.go).toHaveBeenCalledWith('articles.view', {
+        expect($state.go).toHaveBeenCalledWith('freebies.view', {
           articleId: mockArticle._id
         });
       }));
 
-      it('should set $scope.vm.error if error', inject(function (ArticlesService) {
+      it('should set $scope.vm.error if error', inject(function (FreebiesService) {
         var errorMessage = 'error';
-        $httpBackend.expectPUT(/api\/articles\/([0-9a-fA-F]{24})$/).respond(400, {
+        $httpBackend.expectPUT(/api\/freebies\/([0-9a-fA-F]{24})$/).respond(400, {
           message: errorMessage
         });
 
@@ -143,23 +143,23 @@
 
     describe('vm.remove()', function () {
       beforeEach(function () {
-        // Setup articles
-        $scope.vm.article = mockArticle;
+        // Setup freebies
+        $scope.vm.freebie = mockArticle;
       });
 
-      it('should delete the article and redirect to articles', function () {
+      it('should delete the freebie and redirect to freebies', function () {
         // Return true on confirm message
         spyOn(window, 'confirm').and.returnValue(true);
 
-        $httpBackend.expectDELETE(/api\/articles\/([0-9a-fA-F]{24})$/).respond(204);
+        $httpBackend.expectDELETE(/api\/freebies\/([0-9a-fA-F]{24})$/).respond(204);
 
         $scope.vm.remove();
         $httpBackend.flush();
 
-        expect($state.go).toHaveBeenCalledWith('articles.list');
+        expect($state.go).toHaveBeenCalledWith('freebies.list');
       });
 
-      it('should should not delete the article and not redirect', function () {
+      it('should should not delete the freebie and not redirect', function () {
         // Return false on confirm message
         spyOn(window, 'confirm').and.returnValue(false);
 

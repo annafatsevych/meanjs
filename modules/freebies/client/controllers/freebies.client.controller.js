@@ -2,29 +2,29 @@
   'use strict';
 
   angular
-    .module('articles')
+    .module('freebies')
     .controller('ArticlesController', ArticlesController);
 
   ArticlesController.$inject = ['$scope', '$state', 'articleResolve', '$window', 'Authentication'];
 
-  function ArticlesController($scope, $state, article, $window, Authentication) {
+  function ArticlesController($scope, $state, freebie, $window, Authentication) {
     var vm = this;
 
-    vm.article = article;
+    vm.freebie = freebie;
     vm.authentication = Authentication;
     vm.error = null;
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
 
-    // Remove existing Article
+    // Remove existing Freebie
     function remove() {
       if ($window.confirm('Are you sure you want to delete?')) {
-        vm.article.$remove($state.go('articles.list'));
+        vm.freebie.$remove($state.go('freebies.list'));
       }
     }
 
-    // Save Article
+    // Save Freebie
     function save(isValid) {
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'vm.form.articleForm');
@@ -32,14 +32,14 @@
       }
 
       // TODO: move create/update logic to service
-      if (vm.article._id) {
-        vm.article.$update(successCallback, errorCallback);
+      if (vm.freebie._id) {
+        vm.freebie.$update(successCallback, errorCallback);
       } else {
-        vm.article.$save(successCallback, errorCallback);
+        vm.freebie.$save(successCallback, errorCallback);
       }
 
       function successCallback(res) {
-        $state.go('articles.view', {
+        $state.go('freebies.view', {
           articleId: res._id
         });
       }
