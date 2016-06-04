@@ -25,7 +25,7 @@
     menuService.addSubMenuItem('topbar', 'freebies', {
       title: 'Create Freebie',
       state: 'freebies.create',
-      roles: ['user']
+      roles: ['admin']
     });
   }
 }());

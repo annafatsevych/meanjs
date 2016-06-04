@@ -5,7 +5,7 @@
     .module('freebies')
     .controller('FreebiesController', FreebiesController);
 
-  FreebiesController.$inject = ['$scope', '$state', 'articleResolve', '$window', 'Authentication'];
+  FreebiesController.$inject = ['$scope', '$state', 'freebieResolve', '$window', 'Authentication'];
 
   function FreebiesController($scope, $state, freebie, $window, Authentication) {
     var vm = this;
@@ -27,7 +27,7 @@
     // Save Freebie
     function save(isValid) {
       if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'vm.form.articleForm');
+        $scope.$broadcast('show-errors-check-validity', 'vm.form.freebieForm');
         return false;
       }
 

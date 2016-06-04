@@ -29,7 +29,7 @@
         controller: 'FreebiesController',
         controllerAs: 'vm',
         resolve: {
-          articleResolve: newFreebie
+          freebieResolve: newFreebie
         },
         data: {
           roles: ['user', 'admin'],
@@ -42,11 +42,11 @@
         controller: 'FreebiesController',
         controllerAs: 'vm',
         resolve: {
-          articleResolve: getFreebie
+          freebieResolve: getFreebie
         },
         data: {
           roles: ['user', 'admin'],
-          pageTitle: 'Edit Freebie {{ articleResolve.title }}'
+          pageTitle: 'Edit Freebie {{ freebieResolve.title }}'
         }
       })
       .state('freebies.view', {
@@ -55,10 +55,10 @@
         controller: 'FreebiesController',
         controllerAs: 'vm',
         resolve: {
-          articleResolve: getFreebie
+          freebieResolve: getFreebie
         },
         data: {
-          pageTitle: 'Freebie {{ articleResolve.title }}'
+          pageTitle: 'Freebie {{ freebieResolve.title }}'
         }
       });
   }

@@ -48,6 +48,9 @@ exports.update = function (req, res) {
 
   freebie.title = req.body.title;
   freebie.content = req.body.content;
+  freebie.url = req.body.url;
+  freebie.imagurl = req.body.imageurl;
+  if(req.body.categories) {freebie.categories = req.body.categories;}
 
   freebie.save(function (err) {
     if (err) {
@@ -55,6 +58,7 @@ exports.update = function (req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     } else {
+      console.log(freebie);
       res.json(freebie);
     }
   });
@@ -95,7 +99,7 @@ exports.list = function (req, res) {
 /**
  * Freebie middleware
  */
-exports.articleByID = function (req, res, next, id) {
+exports.freebieByID = function (req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({

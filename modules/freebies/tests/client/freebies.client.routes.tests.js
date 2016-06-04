@@ -76,7 +76,7 @@
           // Initialize Controller
           FreebiesController = $controller('FreebiesController as vm', {
             $scope: $scope,
-            articleResolve: mockFreebie
+            freebieResolve: mockFreebie
           });
         }));
 
@@ -86,7 +86,7 @@
 
         it('Should have a resolve function', function () {
           expect(typeof viewstate.resolve).toEqual('object');
-          expect(typeof viewstate.resolve.articleResolve).toEqual('function');
+          expect(typeof viewstate.resolve.freebieResolve).toEqual('function');
         });
 
         it('should respond to URL', inject(function ($state) {
@@ -123,7 +123,7 @@
           // Initialize Controller
           FreebiesController = $controller('FreebiesController as vm', {
             $scope: $scope,
-            articleResolve: mockFreebie
+            freebieResolve: mockFreebie
           });
         }));
 
@@ -133,7 +133,7 @@
 
         it('Should have a resolve function', function () {
           expect(typeof createstate.resolve).toEqual('object');
-          expect(typeof createstate.resolve.articleResolve).toEqual('function');
+          expect(typeof createstate.resolve.freebieResolve).toEqual('function');
         });
 
         it('should respond to URL', inject(function ($state) {
@@ -173,7 +173,7 @@
           // Initialize Controller
           FreebiesController = $controller('FreebiesController as vm', {
             $scope: $scope,
-            articleResolve: mockFreebie
+            freebieResolve: mockFreebie
           });
         }));
 
@@ -183,7 +183,7 @@
 
         it('Should have a resolve function', function () {
           expect(typeof editstate.resolve).toEqual('object');
-          expect(typeof editstate.resolve.articleResolve).toEqual('function');
+          expect(typeof editstate.resolve.freebieResolve).toEqual('function');
         });
 
         it('should respond to URL', inject(function ($state) {

@@ -61,7 +61,7 @@
       // Initialize the Freebies controller.
       FreebiesController = $controller('FreebiesController as vm', {
         $scope: $scope,
-        articleResolve: {}
+        freebieResolve: {}
       });
 
       // Spy on state go

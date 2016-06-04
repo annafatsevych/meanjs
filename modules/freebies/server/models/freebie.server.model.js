@@ -18,7 +18,32 @@ var FreebieSchema = new Schema({
     type: String,
     default: '',
     trim: true,
+    match: /^([\w ,.!?]{1,100})$/,
     required: 'Title cannot be blank'
+  },
+  url: {
+    type: String,
+    default: '',
+    trim: true,
+    required: 'Url cannot be blank'
+  },
+  imageurl: {
+    type: String,
+    default: '',
+    trim: true,
+    required: 'Image Url cannot be blank'
+  },
+  downloadCounter: Number,
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+    required: true
+  },
+  categories: [Schema.Types.ObjectId],
+  updatedAt: {
+    type: Date,
+    default: Date.now(),
+    required: true
   },
   content: {
     type: String,

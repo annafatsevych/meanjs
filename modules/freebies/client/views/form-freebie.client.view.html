@@ -3,13 +3,27 @@
     <h1>{{vm.freebie._id ? 'Edit Freebie' : 'New Freebie'}}</h1>
   </div>
   <div class="col-md-12">
-    <form name="vm.form.articleForm" class="form-horizontal" ng-submit="vm.save(vm.form.articleForm.$valid)" novalidate>
+    <form name="vm.form.freebieForm" class="form-horizontal" ng-submit="vm.save(vm.form.freebieForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
           <label class="control-label" for="title">Title</label>
           <input name="title" type="text" ng-model="vm.freebie.title" id="title" class="form-control" placeholder="Title" required>
-          <div ng-messages="vm.form.articleForm.title.$error" role="alert">
+          <div ng-messages="vm.form.freebieForm.title.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Freebie title is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="url">Url</label>
+          <input name="title" type="url" ng-model="vm.freebie.url" id="url" class="form-control" placeholder="Url" required>
+          <div ng-messages="vm.form.freebieForm.url.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Freebie url is required.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="imageurl">Image Url</label>
+          <input name="title" type="url" ng-model="vm.freebie.imageurl" id="imageurl" class="form-control" placeholder="Image Url" required>
+          <div ng-messages="vm.form.freebieForm.imageurl.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Freebie imageurl is required.</p>
           </div>
         </div>
         <div class="form-group">
