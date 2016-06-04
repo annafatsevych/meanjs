@@ -50,7 +50,9 @@ exports.update = function (req, res) {
   freebie.content = req.body.content;
   freebie.url = req.body.url;
   freebie.imagurl = req.body.imageurl;
-  if(req.body.categories) {freebie.categories = req.body.categories;}
+  if (req.body.categories) {
+    freebie.categories = req.body.categories;
+  }
 
   freebie.save(function (err) {
     if (err) {
