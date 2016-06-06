@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
+var Category = mongoose.model('Category');
 
 /**
  * Freebie Schema
@@ -19,7 +20,10 @@ var FreebieSchema = new Schema({
     default: '',
     trim: true,
     match: /^([\w ,.!?]{1,100})$/,
-    required: 'Title cannot be blank'
+    required: 'Title cannot be blank',
+    get: function(value) {
+      return value.toUpperCase();
+    }
   },
   url: {
     type: String,
@@ -39,7 +43,10 @@ var FreebieSchema = new Schema({
     default: Date.now(),
     required: true
   },
-  categories: [Schema.Types.ObjectId],
+  categories: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Category'
+  }],
   updatedAt: {
     type: Date,
     default: Date.now(),
@@ -55,5 +62,6 @@ var FreebieSchema = new Schema({
     ref: 'User'
   }
 });
+
 
 mongoose.model('Freebie', FreebieSchema);

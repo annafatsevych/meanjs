@@ -19,6 +19,15 @@
             <p class="help-block error-text" ng-message="required">Freebie url is required.</p>
           </div>
         </div>
+        <input ng-model="query" placeholder="Search for freebies" autofocus>
+        <select class="multiselect" data-placeholder="Select Products"
+            ng-model="productSelection" ng-options="item._id as item.name for item in vm.freebie.categories"
+            multiple="multiple" multiselect-dropdown >
+
+            </select>
+<p>Selection: {{productSelection}}</p>
+
+
         <div class="form-group" show-errors>
           <label class="control-label" for="imageurl">Image Url</label>
           <input name="title" type="url" ng-model="vm.freebie.imageurl" id="imageurl" class="form-control" placeholder="Image Url" required>

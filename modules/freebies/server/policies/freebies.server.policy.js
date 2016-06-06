@@ -20,6 +20,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/freebies/:freebieId',
       permissions: '*'
+    }, {
+      resources: '/api/categories',
+      permissions: '*'
     }]
   }, {
     roles: ['user'],

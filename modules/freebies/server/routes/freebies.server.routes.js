@@ -4,7 +4,8 @@
  * Module dependencies
  */
 var freebiesPolicy = require('../policies/freebies.server.policy'),
-  freebies = require('../controllers/freebies.server.controller');
+  freebies = require('../controllers/freebies.server.controller'),
+  categories = require('../controllers/categories.server.controller');
 
 module.exports = function (app) {
   // Freebies collection routes
@@ -17,6 +18,9 @@ module.exports = function (app) {
     .get(freebies.read)
     .put(freebies.update)
     .delete(freebies.delete);
+
+  app.route('/api/categories').all(freebiesPolicy.isAllowed)
+    .get(categories.list);
 
   // Finish by binding the freebie middleware
   app.param('freebieId', freebies.freebieByID);

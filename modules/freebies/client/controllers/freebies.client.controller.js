@@ -9,12 +9,13 @@
 
   function FreebiesController($scope, $state, freebie, $window, Authentication) {
     var vm = this;
-
+    console.log(freebie);
     vm.freebie = freebie;
     vm.authentication = Authentication;
     vm.error = null;
     vm.form = {};
     vm.remove = remove;
+
     vm.save = save;
 
     // Remove existing Freebie

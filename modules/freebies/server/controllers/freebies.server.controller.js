@@ -5,7 +5,10 @@
  */
 var path = require('path'),
   mongoose = require('mongoose'),
+  _ = require('lodash'),
+  q = require('q'),
   Freebie = mongoose.model('Freebie'),
+  Category = mongoose.model('Category'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
@@ -20,9 +23,16 @@ exports.create = function (req, res) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
-    } else {
-      res.json(freebie);
     }
+    Freebie.find().populate('categories').exec(function (err, freebie) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        return res.json(freebie);
+      }
+    });
   });
 };
 
@@ -53,6 +63,19 @@ exports.update = function (req, res) {
   if (req.body.categories) {
     freebie.categories = req.body.categories;
   }
+
+  exports.getAllCats = function (req, res) {
+    var categories = Category.find().sort('-created').exec(function (err, categories) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.json(categories);
+      }
+    });
+  };
+
 
   freebie.save(function (err) {
     if (err) {
@@ -98,6 +121,32 @@ exports.list = function (req, res) {
   });
 };
 
+
+exports.showcategories = function(req, res) {
+  var freebieId = req.params.id;
+
+  return q(
+    Freebie.findById(freebieId)
+    .populate("cateogories")
+    .exec()
+  )
+  .then(function(freebie) {
+    if (!freebie) {
+      return res.send(404);
+    }
+
+    return res.json(freebie);
+  })
+  .fail(function(err) {
+
+    return handleError(res, err);
+  });
+};
+
+function handleError(res, err) {
+  return res.send(500, err);
+}
+
 /**
  * Freebie middleware
  */
@@ -109,7 +158,7 @@ exports.freebieByID = function (req, res, next, id) {
     });
   }
 
-  Freebie.findById(id).populate('user', 'displayName').exec(function (err, freebie) {
+  Freebie.findById(id).populate('user', 'displayName').populate('categories', '_id, name').exec(function (err, freebie) {
     if (err) {
       return next(err);
     } else if (!freebie) {
