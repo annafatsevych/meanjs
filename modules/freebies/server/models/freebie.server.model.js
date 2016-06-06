@@ -43,7 +43,7 @@ var FreebieSchema = new Schema({
     default: Date.now(),
     required: true
   },
-  categories: [Schema.Types.ObjectId],
+  categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
   updatedAt: {
     type: Date,
     default: Date.now(),

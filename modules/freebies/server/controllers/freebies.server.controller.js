@@ -123,7 +123,7 @@ exports.delete = function (req, res) {
 exports.list = function (req, res) {
   console.log("in list");
 
-  Freebie.find().sort('-created').populate('user', 'displayName').exec(function (err, freebies) {
+  Freebie.find().sort('-created').populate('user', 'displayName').populate('categories', 'name').exec(function (err, freebies) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
