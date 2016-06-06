@@ -5,9 +5,9 @@
     .module('freebies')
     .controller('FreebiesController', FreebiesController);
 
-  FreebiesController.$inject = ['$scope', '$state', 'freebieResolve', '$window', 'Authentication'];
+  FreebiesController.$inject = ['$scope', '$state', 'freebieResolve', '$window', 'Authentication', 'CategoriesService'];
 
-  function FreebiesController($scope, $state, freebie, $window, Authentication) {
+  function FreebiesController($scope, $state, freebie, $window, Authentication, CategoriesService) {
     var vm = this;
     console.log(freebie);
     vm.freebie = freebie;
@@ -15,7 +15,11 @@
     vm.error = null;
     vm.form = {};
     vm.remove = remove;
-
+    vm.productSelection = [];
+    CategoriesService.query(function (data) {
+      vm.freebie.categories = data;
+      console.log(vm.freebie.categories);
+    });
     vm.save = save;
 
     // Remove existing Freebie
@@ -36,6 +40,10 @@
       if (vm.freebie._id) {
         vm.freebie.$update(successCallback, errorCallback);
       } else {
+        console.log("In SAVEEE");
+
+        vm.freebie.categories = vm.productSelection;
+        console.log(freebie);
         vm.freebie.$save(successCallback, errorCallback);
       }
 

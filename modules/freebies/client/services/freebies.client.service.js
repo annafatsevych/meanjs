@@ -16,4 +16,19 @@
       }
     });
   }
+
+
+  angular
+    .module('categories.services')
+    .factory('CategoriesService', CategoriesService);
+
+  CategoriesService.$inject = ['$resource'];
+
+  function CategoriesService($resource) {
+    return $resource('api/categories', {}, {
+      update: {
+        method: 'PUT'
+      }
+    });
+  }
 }());

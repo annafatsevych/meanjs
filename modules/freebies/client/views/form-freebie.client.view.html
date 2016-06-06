@@ -21,11 +21,11 @@
         </div>
         <input ng-model="query" placeholder="Search for freebies" autofocus>
         <select class="multiselect" data-placeholder="Select Products"
-            ng-model="productSelection" ng-options="item._id as item.name for item in vm.freebie.categories"
+            ng-model="vm.productSelection" ng-options="item._id as item.name for item in vm.freebie.categories"
             multiple="multiple" multiselect-dropdown >
 
             </select>
-<p>Selection: {{productSelection}}</p>
+<p>Selection: {{vm.productSelection}}</p>
 
 
         <div class="form-group" show-errors>

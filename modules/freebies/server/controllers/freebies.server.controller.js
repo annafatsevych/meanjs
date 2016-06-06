@@ -18,21 +18,31 @@ exports.create = function (req, res) {
   var freebie = new Freebie(req.body);
   freebie.user = req.user;
 
+  console.log('create -----');
+
+  // freebie.user = req.user;
+  // freebie.categories = req.categories;
+  console.log(req.body);
+
   freebie.save(function (err) {
+    // console.log("In save --");
+    // console.log(freebie);
+    // if (err) {
+    //   return res.status(400).send({
+    //     message: errorHandler.getErrorMessage(err)
+    //   });
+    // }
+    // Freebie.find().exec(function (err, freebie) {
+    //   console.log("IN SEC SACE");
+    //   console.log(freebie);
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
+    } else {
+      return res.json(freebie);
     }
-    Freebie.find().populate('categories').exec(function (err, freebie) {
-      if (err) {
-        return res.status(400).send({
-          message: errorHandler.getErrorMessage(err)
-        });
-      } else {
-        return res.json(freebie);
-      }
-    });
+    // });
   });
 };
 
@@ -60,9 +70,8 @@ exports.update = function (req, res) {
   freebie.content = req.body.content;
   freebie.url = req.body.url;
   freebie.imagurl = req.body.imageurl;
-  if (req.body.categories) {
-    freebie.categories = req.body.categories;
-  }
+  freebie.categories = req.body.categories;
+
 
   exports.getAllCats = function (req, res) {
     var categories = Category.find().sort('-created').exec(function (err, categories) {
@@ -78,6 +87,8 @@ exports.update = function (req, res) {
 
 
   freebie.save(function (err) {
+    console.log("In SAVE ---");
+    console.log(freebie);
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -110,6 +121,8 @@ exports.delete = function (req, res) {
  * List of Freebies
  */
 exports.list = function (req, res) {
+  console.log("in list");
+
   Freebie.find().sort('-created').populate('user', 'displayName').exec(function (err, freebies) {
     if (err) {
       return res.status(400).send({
