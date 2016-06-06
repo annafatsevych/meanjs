@@ -38,6 +38,7 @@
 
       // TODO: move create/update logic to service
       if (vm.freebie._id) {
+        vm.freebie.categories = vm.productSelection;
         vm.freebie.$update(successCallback, errorCallback);
       } else {
         console.log("In SAVEEE");
