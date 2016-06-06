@@ -32,6 +32,7 @@
     "consolidate": "~0.14.0",
     "cookie-parser": "~1.4.1",
     "crypto": "0.0.3",
+    "eslint-plugin-react": "^5.1.1",
     "express": "~4.13.4",
     "express-session": "~1.13.0",
     "file-stream-rotator": "~0.0.6",
@@ -64,6 +65,7 @@
     "serve-favicon": "~2.3.0",
     "socket.io": "~1.4.5",
     "swig": "~1.4.2",
+    "ui-select": "^0.17.1",
     "validator": "~5.1.0",
     "winston": "^2.2.0"
   },
