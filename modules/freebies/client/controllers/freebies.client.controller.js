@@ -16,15 +16,21 @@
     vm.form = {};
     vm.remove = remove;
     vm.figureOutItemsToDisplay = figureOutItemsToDisplay;
-    vm.productSelection = [];
+
+    if(vm.freebie.categories){
+      vm.productSelection = vm.freebie.categories;
+    } else {
+      vm.productSelection = [];
+    }
+    
     CategoriesService.query(function (data) {
-      vm.freebie.categories = data;
-      console.log(vm.freebie.categories);
+      vm.categories = data;
+      console.log(vm.categories);
     });
     vm.save = save;
 
     function figureOutItemsToDisplay() {
-      vm.filteredItems = $filter('filter')(vm.freebie.categories, {
+      vm.filteredItems = $filter('filter')(vm.categories, {
         $: vm.search
       });
       // vm.filterLength = vm.filteredItems.length;
@@ -32,7 +38,7 @@
       // var end = begin + vm.itemsPerPage;
       // vm.pagedItems = vm.filteredItems.slice(begin, end);
       console.log(vm.filteredItems);
-      console.log(vm.freebie.categories);
+      console.log(vm.categories);
     }
 
     // Remove existing Freebie

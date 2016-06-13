@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "acl": "~0.4.9",
+    "angular-sanitize": "^1.5.6",
+    "angular-ui-select": "^0.12.100",
     "async": "~1.5.2",
     "body-parser": "~1.15.0",
     "bower": "~1.7.7",
