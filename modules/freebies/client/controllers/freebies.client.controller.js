@@ -17,12 +17,11 @@
     vm.remove = remove;
     vm.figureOutItemsToDisplay = figureOutItemsToDisplay;
 
-    if(vm.freebie.categories){
+    if (vm.freebie.categories) {
       vm.productSelection = vm.freebie.categories;
     } else {
       vm.productSelection = [];
     }
-    
     CategoriesService.query(function (data) {
       vm.categories = data;
       console.log(vm.categories);
