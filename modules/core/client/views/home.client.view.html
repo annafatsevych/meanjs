@@ -25,20 +25,22 @@
   <div class="page-header">
     <h1>Freebies</h1>
   </div>
-
-  <div class="row">
-    <div class="testingClass">
-    <a ng-repeat="freebie in vm.freebies" ng-href="{{freebie.url}}" ng-click="vm.save(freebie)" class="list-group-item freebie-list fade">
+  <div id="wrapper">
+    <div id="columns">
+  
+    <!-- <div class="testingClass">
+ -->    <a ng-repeat="freebie in vm.freebies" ng-href="{{freebie.url}}" ng-click="vm.save(freebie)" class="list-group-item freebie-list fade pin">
       <!-- <small class="list-group-item-text">
         Posted on
         <span ng-bind="freebie.created | date:'mediumDate'"></span>
       </small> -->
         <div class="pull-right"><img class="img-responsive freebie-img"  ng-src="{{freebie.imageurl}}" alt="Image" /></div>
         <h4 class="list-group-item-heading text-center" ng-bind="freebie.title"></h4>
-        <p class="list-group-item-text">{{freebie.downloads}}</p>
+        <p class="list-group-item-text text-center">Downloads ({{freebie.downloads}})</p>
     </a>
   </div>
   </div>
+  
   <!-- <div class="list-group">
     <a ng-repeat="freebie in vm.freebies" ui-sref="freebies.view({ freebieId: freebie._id })" class="list-group-item fade">
       <small class="list-group-item-text">
