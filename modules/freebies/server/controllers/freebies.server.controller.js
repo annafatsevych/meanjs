@@ -60,6 +60,21 @@ exports.read = function (req, res) {
   res.json(freebie);
 };
 
+exports.readTerms = function (req, res) {
+  // convert mongoose document to JSON
+  console.log("in terms list");
+  console.log(req.param('terms'));
+
+  Freebie.find({ 'terms': new RegExp(req.param('terms'), 'i') }).sort('-created').populate('user', 'displayName').populate('categories', 'name').exec(function (err, freebies) {
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      res.json(freebies);
+    }
+  });
+};
 /**
  * Update an freebie
  */

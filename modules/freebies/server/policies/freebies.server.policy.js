@@ -23,6 +23,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/categories',
       permissions: '*'
+    }, {
+      resources: '/api/freebies/terms/:terms',
+      permissions: '*'
     }]
   }, {
     roles: ['user'],
@@ -32,11 +35,17 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/freebies/:freebieId',
       permissions: ['get']
+    }, {
+      resources: '/api/freebies/terms/:terms',
+      permissions: '*'
     }]
   }, {
     roles: ['guest'],
     allows: [{
       resources: '/api/freebies',
+      permissions: ['get']
+    }, {
+      resources: '/api/freebies/terms/:terms',
       permissions: ['get']
     }, {
       resources: '/api/freebies/:freebieId',

@@ -19,6 +19,9 @@ module.exports = function (app) {
     .put(freebies.update)
     .delete(freebies.delete);
 
+  app.route('/api/freebies/terms/:terms').all(freebiesPolicy.isAllowed)
+    .get(freebies.readTerms);
+
   app.route('/api/categories').all(freebiesPolicy.isAllowed)
     .get(categories.list);
 
