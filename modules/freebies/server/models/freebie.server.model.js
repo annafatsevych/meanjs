@@ -54,6 +54,10 @@ var FreebieSchema = new Schema({
     default: '',
     trim: true
   },
+  terms: {
+    type: String,
+    default: 'PU'
+  },
   downloads: {
     type: Number,
     default: 0

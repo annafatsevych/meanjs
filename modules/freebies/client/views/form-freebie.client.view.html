@@ -19,6 +19,10 @@
             <p class="help-block error-text" ng-message="required">Freebie url is required.</p>
           </div>
         </div>
+        <div class="row text-center">
+          <a ng-if="vm.freebie.url !== undefined" ng-href="{{vm.freebie.url}}" >{{vm.freebie.url}}</a>
+            <!-- {{vm.freebie.imageurl}} -->
+        </div>
         <!-- <div class="col-md-4" style="margin-top: 2em">
           <input class="form-control col-md-4" type="text" ng-model="vm.search" placeholder="Search" ng-change="vm.figureOutItemsToDisplay()" />
         </div> -->
@@ -48,6 +52,21 @@
           </ui-select-choices>
         </ui-select>
       </div>
+      <div class="form-group" show-errors>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="terms" value="CU" ng-model="vm.freebie.terms">
+                    Commercial Use
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="terms" value="PU" ng-model="vm.freebie.terms">
+                    Personal Use
+                </label>
+            </div>
+        </div>
+
         <!-- <ui-select ng-model="selectedItem">
           <ui-select-match>
               <span ng-bind="$select.selected.name"></span>

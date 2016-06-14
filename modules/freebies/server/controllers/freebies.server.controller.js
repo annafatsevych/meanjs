@@ -72,6 +72,7 @@ exports.update = function (req, res) {
   freebie.imagurl = req.body.imageurl;
   freebie.categories = req.body.categories;
   freebie.downloads = req.body.downloads;
+  freebie.terms = req.body.terms;
 
 
   exports.getAllCats = function (req, res) {
