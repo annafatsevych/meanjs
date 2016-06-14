@@ -17,6 +17,7 @@
       by
       <span ng-if="vm.freebie.user" ng-bind="vm.freebie.user.displayName"></span>
       <span ng-if="!vm.freebie.user">Deleted User</span>
+      <img width="300 px" class="pull-left" ng-src="{{vm.freebie.imageurl}}" alt="Image" />
     </em>
   </small>
   <p class="lead" ng-bind="vm.freebie.content"></p>

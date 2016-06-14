@@ -11,8 +11,9 @@
         <span ng-if="freebie.user" ng-bind="freebie.user.displayName"></span>
         <span ng-if="!freebie.user">Deleted User</span>
       </small>
-      <h4 class="list-group-item-heading" ng-bind="freebie.title"></h4>
-      <p class="list-group-item-text" ng-bind="freebie.content"></p>
+        <div class="pull-right"><img width="100 px" ng-src="{{freebie.imageurl}}" alt="Image" /></div>
+        <h4 class="list-group-item-heading" ng-bind="freebie.title"></h4>
+        <p class="list-group-item-text" ng-bind="freebie.content"></p>
     </a>
   </div>
   <div class="alert alert-warning text-center" ng-if="vm.freebies.$resolved && !vm.freebies.length">

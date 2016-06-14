@@ -60,10 +60,19 @@
         <div class="form-group" show-errors>
           <label class="control-label" for="imageurl">Image Url</label>
           <input name="title" type="url" ng-model="vm.freebie.imageurl" id="imageurl" class="form-control" placeholder="Image Url" required>
+
           <div ng-messages="vm.form.freebieForm.imageurl.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Freebie imageurl is required.</p>
           </div>
         </div>
+        <div class="row text-center">
+          <img width="200 px" ng-if="vm.freebie.imageurl !== undefined" ng-src="{{vm.freebie.imageurl}}" alt="Image" />
+            <!-- {{vm.freebie.imageurl}} -->
+        </div>
+        <!-- <div ng-show="vm.form.freebieForm.imageurl.$dirty">
+          <img ng-src="{{vm.form.freebieForm.freebie.imageurl}}" alt="Image" />
+          <p>{{vm.freebie.imageurl}}</p>
+        </div> -->
         <div class="form-group">
           <label class="control-label" for="content">Content</label>
           <textarea name="content" data-ng-model="vm.freebie.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
