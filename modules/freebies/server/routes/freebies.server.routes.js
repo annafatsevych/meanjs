@@ -22,6 +22,9 @@ module.exports = function (app) {
   app.route('/api/freebies/terms/:terms').all(freebiesPolicy.isAllowed)
     .get(freebies.readTerms);
 
+  app.route('/api/freebies/updatedownloads/:freebieId').all(freebiesPolicy.isAllowed)
+    .get(freebies.updateDownloads);
+
   app.route('/api/categories').all(freebiesPolicy.isAllowed)
     .get(categories.list);
 

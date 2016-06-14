@@ -90,17 +90,24 @@ exports.update = function (req, res) {
   freebie.terms = req.body.terms;
 
 
-  exports.getAllCats = function (req, res) {
-    var categories = Category.find().sort('-created').exec(function (err, categories) {
-      if (err) {
-        return res.status(400).send({
-          message: errorHandler.getErrorMessage(err)
-        });
-      } else {
-        res.json(categories);
-      }
-    });
-  };
+  freebie.save(function (err) {
+    console.log("In SAVE ---");
+    console.log(freebie);
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    } else {
+      console.log(freebie);
+      res.json(freebie);
+    }
+  });
+};
+exports.updateDownloads = function (req, res) {
+  var freebie = req.freebie;
+  console.log("in updatess DOQNLOADS");
+  console.log(req.freebie);
+  freebie.downloads = freebie.downloads + 1;
 
 
   freebie.save(function (err) {
@@ -181,7 +188,7 @@ function handleError(res, err) {
  * Freebie middleware
  */
 exports.freebieByID = function (req, res, next, id) {
-
+  console.log("Get by ID HEERE");
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
       message: 'Freebie is invalid'

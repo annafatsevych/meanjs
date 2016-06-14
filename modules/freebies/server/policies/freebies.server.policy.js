@@ -51,6 +51,9 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/freebies/:freebieId',
       permissions: ['get']
     }, {
+      resources: '/api/freebies/updatedownloads/:freebieId',
+      permissions: ['get']
+    }, {
       resources: '/api/categories',
       permissions: '*'
     }]

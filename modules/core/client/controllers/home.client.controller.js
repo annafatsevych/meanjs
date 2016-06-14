@@ -5,36 +5,32 @@
     .module('core')
     .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['FreebiesService', '$state'];
+  HomeController.$inject = ['FreebiesService', '$state', '$http', '$q'];
 
-  function HomeController(FreebiesService, $state, freebie) {
+  function HomeController(FreebiesService, $state, $http, $q, freebie) {
     var vm = this;
     vm.freebies = FreebiesService.query();
-    vm.save = save;
+    vm.saveDownloads = saveDownloads;
 
     function save(freebie) {
-      console.log(freebie);
       freebie.downloads = freebie.downloads + 1;
+      console.log(freebie);
       FreebiesService.update(freebie);
     }
 
 
-    // function save(freebie) {
-    //   console.log("$$$ - FREEBIE SAVE");
-    //   if (vm.freebie._id) {
-    //     vm.freebie.downloads = vm.freebie.downloads + 1;
-    //     vm.freebie.$update(successCallback, errorCallback);
-    //   }
-    //
-    //   function successCallback(res) {
-    //     $state.go('freebies.view', {
-    //       freebieId: res._id
-    //     });
-    //   }
-    //
-    //   function errorCallback(res) {
-    //     vm.error = res.data.message;
-    //   }
-    // }
+    function saveDownloads(freebie) {
+      console.log("$$$ - FREEBIE SAVE");
+      console.log(freebie);
+      if (freebie._id) {
+        freebie.downloads = freebie.downloads + 1;
+        console.log("Im in the save");
+        $http.get("/api/freebies/updateDownloads/" + freebie._id)
+          .then(function(response) {
+            vm.myWelcome = response.data;
+          });
+        console.log(vm.myWelcome);
+      }
+    }
   }
 }());

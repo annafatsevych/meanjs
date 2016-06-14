@@ -7,6 +7,16 @@
 
   FreebiesService.$inject = ['$resource'];
 
+  // function FreebiesService($resource) {
+  //   return $resource('api/freebies/:freebieId', {
+  //     freebieId: '@_id'
+  //   }, {
+  //     update: {
+  //       method: 'PUT'
+  //     }
+  //   });
+  // }
+
   function FreebiesService($resource) {
     return $resource('api/freebies/:freebieId', {
       freebieId: '@_id'
@@ -16,7 +26,6 @@
       }
     });
   }
-
 
   angular
     .module('categories.services')
