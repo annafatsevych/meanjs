@@ -65,12 +65,13 @@ exports.read = function (req, res) {
  */
 exports.update = function (req, res) {
   var freebie = req.freebie;
-
+  console.log("in updatess");
   freebie.title = req.body.title;
   freebie.content = req.body.content;
   freebie.url = req.body.url;
   freebie.imagurl = req.body.imageurl;
   freebie.categories = req.body.categories;
+  freebie.downloads = req.body.downloads;
 
 
   exports.getAllCats = function (req, res) {
@@ -123,7 +124,6 @@ exports.delete = function (req, res) {
 exports.list = function (req, res) {
   console.log("in list");
 
-  // Freebie.find().sort('-created').populate('user', 'displayName').populate('categories', 'name').exec(function (err, freebies) {
   Freebie.find().sort('-created').populate('user', 'displayName').populate('categories', 'name').exec(function (err, freebies) {
     if (err) {
       return res.status(400).send({

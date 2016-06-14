@@ -1,4 +1,4 @@
-<section>
+<!-- <section>
   <div class="page-header">
     <h1>Freebies</h1>
   </div>
@@ -16,6 +16,40 @@
         <p class="list-group-item-text" ng-bind="freebie.content"></p>
     </a>
   </div>
+  <div class="alert alert-warning text-center" ng-if="vm.freebies.$resolved && !vm.freebies.length">
+    No freebies yet, why don't you <a ui-sref="freebies.create">create one</a>?
+  </div>
+</section> -->
+
+<section>
+  <div class="page-header">
+    <h1>Freebies</h1>
+  </div>
+
+  <div class="row">
+    <div class="testingClass">
+    <a ng-repeat="freebie in vm.freebies" ui-sref="freebies.view({ freebieId: freebie._id })" class="list-group-item freebie-list fade">
+      <!-- <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="freebie.created | date:'mediumDate'"></span>
+      </small> -->
+        <div class="pull-right"><img class="img-responsive freebie-img"  ng-src="{{freebie.imageurl}}" alt="Image" /></div>
+        <h4 class="list-group-item-heading text-center" ng-bind="freebie.title"></h4>
+        <p class="list-group-item-text">{{freebie.url}}</p>
+    </a>
+  </div>
+  </div>
+  <!-- <div class="list-group">
+    <a ng-repeat="freebie in vm.freebies" ui-sref="freebies.view({ freebieId: freebie._id })" class="list-group-item fade">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="freebie.created | date:'mediumDate'"></span>
+      </small>
+        <div class="pull-right"><img class="freebie-img" width="50 px" ng-src="{{freebie.imageurl}}" alt="Image" /></div>
+        <h4 class="list-group-item-heading" ng-bind="freebie.title"></h4>
+        <p class="list-group-item-text" ng-bind="freebie.content"></p>
+    </a>
+  </div> -->
   <div class="alert alert-warning text-center" ng-if="vm.freebies.$resolved && !vm.freebies.length">
     No freebies yet, why don't you <a ui-sref="freebies.create">create one</a>?
   </div>

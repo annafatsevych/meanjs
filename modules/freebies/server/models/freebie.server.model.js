@@ -54,6 +54,10 @@ var FreebieSchema = new Schema({
     default: '',
     trim: true
   },
+  downloads: {
+    type: Number,
+    default: 0
+  },
   user: {
     type: Schema.ObjectId,
     ref: 'User'
