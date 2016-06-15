@@ -5,12 +5,54 @@
     .module('core')
     .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['FreebiesService', '$state', '$http', '$q'];
+  HomeController.$inject = ['FreebiesService', 'CategoriesService', '$state', '$http', '$q', '$filter'];
 
-  function HomeController(FreebiesService, $state, $http, $q, freebie) {
+  function HomeController(FreebiesService, CategoriesService, $state, $http, $q, freebie, $filter) {
     var vm = this;
     vm.freebies = FreebiesService.query();
+    console.log("THIS IS FREE");
+    console.log(vm.freebies);
     vm.saveDownloads = saveDownloads;
+    vm.filters = {};
+    vm.filters.categories = [];
+    vm.filterFn = filterFn;
+
+
+    function filterFn(cats) {
+      console.log(cats);
+     // Do some tests
+      var log = [];
+
+      _.forEach(vm.freebies, function(freebie, key) {
+        _.forEach(freebie.categories, function(category, key) {
+          _.forEach(cats, function(cat, key) {
+            if (cat.name === category.name) {
+              console.log(category.name);
+              log.push(freebie);
+            }
+          });
+        });
+        // console.log(value);
+      });
+      _.forEach(cats, function(value, key) {
+
+      });
+      // angular.forEach(vm.freebies.categories, function(value, key) {
+      //   angular.forEach(cats, function(value, key){
+      //     console.log(value);
+      //   });
+      //   this.push(key + ': ' + value);
+      // }, log);
+      console.log(log);
+      return log;
+    }
+
+    console.log(vm.filters);
+
+    CategoriesService.query(function (data) {
+      vm.categories = data;
+      console.log(vm.categories);
+    });
 
     function save(freebie) {
       freebie.downloads = freebie.downloads + 1;

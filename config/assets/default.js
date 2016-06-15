@@ -21,6 +21,7 @@ module.exports = {
         'public/lib/angular-file-upload/dist/angular-file-upload.js',
         'public/lib/angular-sanitize/angular-sanitize.js',
         'public/lib/angular-ui-select/dist/select.js',
+        'public/lib/lodash/dist/lodash.js',
         'public/lib/owasp-password-strength-test/owasp-password-strength-test.js'
         // endbower
       ],

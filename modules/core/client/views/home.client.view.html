@@ -24,12 +24,23 @@
 <section>
   <div class="page-header">
     <h1>Freebies</h1>
+    <button type="button" class="btn btn-default btn-sm" ng-click="vm.filters.terms = 'CU'">Commercial Use</button>
+    <button type="button" class="btn btn-default btn-sm" ng-click="vm.filters.terms = 'PU'">Personal Use</button>
+
+    <ui-select multiple ng-model="vm.filters.categories" theme="bootstrap" ng-change="vm.filterFn(vm.filters.categories)" ng-disabled="false" close-on-select="true" style="width: 300px;" title="Choose a color">
+    <ui-select-match placeholder="Select colors...">{{$item.name}}</ui-select-match>
+    <ui-select-choices repeat="color in vm.categories">
+      {{color.name}}
+    </ui-select-choices>
+  </ui-select>
+  <p>Selected: {{vm.filters.categories}}</p>
   </div>
   <div id="wrapper">
     <div id="columns">
-  
+
     <!-- <div class="testingClass">
- -->    <a ng-repeat="freebie in vm.freebies" ng-href="{{freebie.url}}" ng-click="vm.saveDownloads(freebie)" class="list-group-item freebie-list fade pin">
+ -->    <a ng-repeat="freebie in vm.freebies | filter: vm.filters.terms | myFreebies:vm.freebies:vm.filters" ng-href="{{freebie.url}}" ng-click="vm.saveDownloads(freebie)" class="list-group-item freebie-list fade pin">
+
       <!-- <small class="list-group-item-text">
         Posted on
         <span ng-bind="freebie.created | date:'mediumDate'"></span>
@@ -40,7 +51,7 @@
     </a>
   </div>
   </div>
-  
+
   <!-- <div class="list-group">
     <a ng-repeat="freebie in vm.freebies" ui-sref="freebies.view({ freebieId: freebie._id })" class="list-group-item fade">
       <small class="list-group-item-text">
