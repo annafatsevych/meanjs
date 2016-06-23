@@ -24,32 +24,33 @@
 <section>
   <div class="page-header">
     <h1>Freebies</h1>
-    <button type="button" class="btn btn-default btn-sm" ng-click="vm.filters.terms = 'CU'">Commercial Use</button>
-    <button type="button" class="btn btn-default btn-sm" ng-click="vm.filters.terms = 'PU'">Personal Use</button>
+    <button type="button" class="btn btn-default btn-lg" aria-pressed="true" style="dislay: block" ng-class="{ 'active' : vm.cuButtonPressed }" ng-click="vm.filters.terms = 'CU'; vm.cuButtonPressed = !vm.cuButtonPressed">Commercial Use {{vm.cuButtonPressed}}</button>
+    <button type="button" data-toggle="button" aria-pressed="true" class="btn btn-default btn-lg" ng-click="vm.filters.terms = 'PU'">Personal Use</button>
 
     <ui-select multiple ng-model="vm.filters.categories" theme="bootstrap" ng-change="vm.filterFn(vm.filters.categories)" ng-disabled="false" close-on-select="true" style="width: 300px;" title="Choose a color">
-    <ui-select-match placeholder="Select colors...">{{$item.name}}</ui-select-match>
-    <ui-select-choices repeat="color in vm.categories">
-      {{color.name}}
-    </ui-select-choices>
-  </ui-select>
-  <p>Selected: {{vm.filters.categories}}</p>
+      <ui-select-match placeholder="Select colors...">{{$item.name}}</ui-select-match>
+      <ui-select-choices repeat="color in vm.categories">
+        {{color.name}}
+      </ui-select-choices>
+    </ui-select>
   </div>
   <div id="wrapper">
     <div id="columns">
 
-    <!-- <div class="testingClass">
- -->    <a ng-repeat="freebie in vm.freebies | filter: vm.filters.terms | myFreebies:vm.freebies:vm.filters" ng-href="{{freebie.url}}" ng-click="vm.saveDownloads(freebie)" class="list-group-item freebie-list fade pin">
+      <!-- <div class="testingClass">
+ -->
+      <a ng-repeat="freebie in vm.freebies | filter: vm.filters.terms | myFreebies:vm.freebies:vm.filters" ng-href="{{freebie.url}}" ng-click="vm.saveDownloads(freebie)" class="list-group-item freebie-list fade pin">
 
-      <!-- <small class="list-group-item-text">
+        <!-- <small class="list-group-item-text">
         Posted on
         <span ng-bind="freebie.created | date:'mediumDate'"></span>
       </small> -->
-        <div class="pull-right"><img class="freebie-img"  ng-src="{{freebie.imageurl}}" alt="Image" /></div>
+        <!-- <div ng-repeat="category in freebie.categories">{{category.name}}</div> -->
+        <div class="pull-right"><img class="freebie-img" ng-src="{{freebie.imageurl}}" alt="Image" /></div>
         <h4 class="list-group-item-heading text-center" ng-bind="freebie.title"></h4>
         <p class="list-group-item-text text-center">Downloads ({{freebie.downloads}})</p>
-    </a>
-  </div>
+      </a>
+    </div>
   </div>
 
   <!-- <div class="list-group">

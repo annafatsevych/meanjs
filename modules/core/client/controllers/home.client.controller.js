@@ -16,6 +16,8 @@
     vm.filters = {};
     vm.filters.categories = [];
     vm.filterFn = filterFn;
+    vm.cuButtonPressed = false;
+    vm.puButtonPressed = false;
 
 
     function filterFn(cats) {

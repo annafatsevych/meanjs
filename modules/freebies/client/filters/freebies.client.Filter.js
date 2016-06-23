@@ -31,7 +31,9 @@
               }
             });
           });
-          if (flag === true){
+          if (flag === true) {
+            console.log("Freebie has the category");
+            console.log(freebieToFilter);
             filtered.push(freebieToFilter);
           }
         });
