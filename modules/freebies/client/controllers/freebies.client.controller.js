@@ -10,6 +10,7 @@
   function FreebiesController($scope, $state, $filter, freebie, $window, Authentication, CategoriesService) {
     var vm = this;
     console.log(freebie);
+    console.log("This is the freebie");
 
     // $scope.testThis = function (test) {
     // alert('Mouse Over Event Demo');
