@@ -31,7 +31,7 @@
               }
             });
           });
-          if (flag === true){
+          if (flag === true) {
             filtered.push(freebieToFilter);
           }
         });
